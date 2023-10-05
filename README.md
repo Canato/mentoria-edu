@@ -27,5 +27,7 @@ Make a zip of your solution and upload it to the link in the email inviting you 
 
 ### Guardian API Key
 
+TODO eduardo generate new key
+
 Note that you might need to replace the guardian API key for this project if [this link](https://content.guardianapis.com/search?api-key=09658731-cb6d-4a84-9e3c-5f030389de4e) doesn't work. To get a new key, go to https://bonobo.capi.gutools.co.uk/register/developer and register yourself as a developer. Once you get your key, replace the string [here](https://github.com/monzo/android-code-test/blob/49a8e3513b3da3c6ad6a1972dac23e3a74160887/app/src/main/res/values/api_constants.xml) with your key and you should be good to go!
 
