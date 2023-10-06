@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.monzo.androidtest.R
 import com.monzo.androidtest.articles.model.Article
 import java.util.*
@@ -15,7 +17,7 @@ import java.util.*
 private var context: Context? = null
 
 internal class ArticleAdapter(
-        ctx: Context
+    ctx: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val articles: MutableList<Article> = ArrayList()
 
@@ -44,12 +46,17 @@ internal class ArticleAdapter(
     }
 
     class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(article: Article) {
-            val headlineView = itemView.findViewById<TextView>(R.id.article_headline_textview)
-            val thumbnailView = itemView.findViewById<ImageView>(R.id.article_thumbnail_imageview)
+        private val headlineView = itemView.findViewById<TextView>(R.id.article_headline_textview)
+        private val thumbnailView = itemView.findViewById<ImageView>(R.id.article_thumbnail_imageview)
 
+        fun bind(article: Article) {
             headlineView.text = article.title
-            Glide.with(context!!).load(article.thumbnail).into(thumbnailView)
+
+            // Load the image as a circular image
+            Glide.with(context!!)
+                .load(article.thumbnail)
+                .apply(RequestOptions().transform(CircleCrop()))
+                .into(thumbnailView)
         }
     }
 }

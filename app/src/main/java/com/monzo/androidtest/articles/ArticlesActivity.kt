@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
+import com.monzo.androidtest.articles.model.Article
 
 class ArticlesActivity : AppCompatActivity() {
     private lateinit var viewModel: ArticlesViewModel
@@ -37,3 +38,4 @@ class ArticlesActivity : AppCompatActivity() {
         }
     }
 }
+
