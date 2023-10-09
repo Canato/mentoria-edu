@@ -19,7 +19,6 @@ class ArticlesViewModel(
     }
 
     fun onRefresh() {
-        setState { copy(refreshing = true) }
         disposables += repository.latestFintechArticles()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
