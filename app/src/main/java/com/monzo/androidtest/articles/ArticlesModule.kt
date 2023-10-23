@@ -2,6 +2,7 @@ package com.monzo.androidtest.articles
 
 import android.content.Context
 import android.content.res.Resources
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.monzo.androidtest.R
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.articles.model.ArticleMapper
@@ -24,25 +25,30 @@ class ArticlesModule {
 
     private fun createGuardianService(context: Context): GuardianService {
         val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .add(Date::class.java, Rfc3339DateJsonAdapter())
-                .build()
+            .add(KotlinJsonAdapterFactory())
+            .add(Date::class.java, Rfc3339DateJsonAdapter())
+            .build()
 
         return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .client(createOkHttpClient(context.resources))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(GuardianService::class.java)
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(createOkHttpClient(context))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(GuardianService::class.java)
     }
 
-    private fun createOkHttpClient(resources: Resources): OkHttpClient {
+    private fun createOkHttpClient(context: Context): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        // Initialize Chucker here
+        val chuckerInterceptor = ChuckerInterceptor(context)
+
         val clientBuilder = OkHttpClient.Builder()
-        clientBuilder.addInterceptor(getAuthInterceptor(resources))
+        clientBuilder.addInterceptor(getAuthInterceptor(context.resources))
         clientBuilder.addInterceptor(loggingInterceptor)
+        clientBuilder.addInterceptor(chuckerInterceptor) // Add ChuckerInterceptor here
         return clientBuilder.build()
     }
 
@@ -62,3 +68,4 @@ class ArticlesModule {
         private const val HEADER_API_KEY = "api-key"
     }
 }
+
