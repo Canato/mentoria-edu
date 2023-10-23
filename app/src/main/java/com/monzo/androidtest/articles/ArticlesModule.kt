@@ -43,7 +43,9 @@ class ArticlesModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         // Initialize Chucker here
-        val chuckerInterceptor = ChuckerInterceptor(context)
+        val chuckerInterceptor = ChuckerInterceptor.Builder(context)
+            .collector(com.chuckerteam.chucker.api.ChuckerCollector(context))
+            .build()
 
         val clientBuilder = OkHttpClient.Builder()
         clientBuilder.addInterceptor(getAuthInterceptor(context.resources))
