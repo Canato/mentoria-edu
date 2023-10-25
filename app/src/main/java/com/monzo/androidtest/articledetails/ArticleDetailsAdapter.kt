@@ -16,9 +16,8 @@ import java.util.*
 
 private var context: Context? = null
 
-internal class ArticleAdapter(
+internal class ArticleDetailsAdapter(
     ctx: Context,
-    private val clickListener: OnArticleClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val articles: MutableList<Article> = ArrayList()
 
@@ -29,7 +28,7 @@ internal class ArticleAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(R.layout.list_item_article, parent, false)
-        return ArticleViewHolder(view, clickListener)
+        return ArticleViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -46,25 +45,17 @@ internal class ArticleAdapter(
         notifyDataSetChanged()
     }
 
-    class ArticleViewHolder(view: View, private val clickListener: OnArticleClickListener) : RecyclerView.ViewHolder(view) {
+    class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val headlineView = itemView.findViewById<TextView>(R.id.article_headline_textview)
         private val thumbnailView = itemView.findViewById<ImageView>(R.id.article_thumbnail_imageview)
-
+        private val sectionTextView = itemView.findViewById<TextView>(R.id.article_section_textview)
+        private val publishedTextView = itemView.findViewById<TextView>(R.id.article_published_textview)
+        private val bodyTextView = itemView.findViewById<TextView>(R.id.article_body_textview)
         fun bind(article: Article) {
             headlineView.text = article.title
-
-            // Load the image as a circular image
-            Glide.with(context!!)
-                .load(article.thumbnail)
-                .apply(RequestOptions().transform(CircleCrop()))
-                .into(thumbnailView)
-
-            itemView.setOnClickListener {
-                clickListener.onArticleClick(article)
-            }
+            sectionTextView.text = article.sectionId
+            publishedTextView.id = article.published.date
+            bodyTextView.text = article.body
         }
-    }
-    interface OnArticleClickListener {
-        fun onArticleClick(article: Article)
     }
 }

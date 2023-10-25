@@ -23,6 +23,12 @@ class ArticleMapper {
             } else {
                 headline = fields.headline ?: ""
             }
+            var body: String
+            if (fields == null) {
+                body = ""
+            } else {
+                body = fields.body ?: ""
+            }
 
             articles.add(Article(id,
                     thumbnail,
@@ -30,7 +36,8 @@ class ArticleMapper {
                     sectionName,
                     webPublicationDate,
                     headline,
-                    apiUrl))
+                    apiUrl,
+                    body))
         }
 
         return articles

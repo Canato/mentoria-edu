@@ -6,7 +6,7 @@ import com.monzo.androidtest.articles.model.Article
 import com.monzo.androidtest.articles.model.ArticleMapper
 import io.reactivex.Single
 
-class ArticlesRepository(
+class ArticleDetailsRepository(
     private val guardianService: GuardianService,
     private val articleMapper: ArticleMapper
 ) {
@@ -19,5 +19,3 @@ class ArticlesRepository(
         return guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
     }
 }
-
-
