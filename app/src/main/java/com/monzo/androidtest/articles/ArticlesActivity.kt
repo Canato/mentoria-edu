@@ -1,5 +1,6 @@
 package com.monzo.androidtest.articles
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,7 +11,7 @@ import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
 import com.monzo.androidtest.articles.model.Article
 
-class ArticlesActivity : AppCompatActivity() {
+class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListener {
     private lateinit var viewModel: ArticlesViewModel
     private lateinit var adapter: ArticleAdapter
 
@@ -26,7 +27,7 @@ class ArticlesActivity : AppCompatActivity() {
 
         viewModel = HeadlinesApp.from(applicationContext).inject(this)
 
-        adapter = ArticleAdapter(this)
+        adapter = ArticleAdapter(this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -36,6 +37,11 @@ class ArticlesActivity : AppCompatActivity() {
             swipeRefreshLayout.isRefreshing = state.refreshing
             adapter.showArticles(state.articles)
         }
+    }
+    override fun onArticleClick(article: Article) {
+        val intent = Intent(this, ArticleDetailsActivity::class.java)
+        intent.putExtra( "ARTICLE", article)
+        startActivity(intent)
     }
 }
 
