@@ -5,42 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/article_details_thumbnail_imageview"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="8dp"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/article_title_textview"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="16dp" />
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="#FEFEFE" />
 
-    <TextView
-        android:id="@+id/article_published_textview"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/article_details_swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textSize="14sp" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/article_section_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textSize="16sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/article_details_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/article_body_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="16sp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
+

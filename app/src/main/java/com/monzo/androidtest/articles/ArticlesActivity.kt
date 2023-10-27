@@ -40,7 +40,7 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
     }
     override fun onArticleClick(article: Article) {
         val intent = Intent(this, ArticleDetailsActivity::class.java)
-        intent.putExtra( "ARTICLE", article)
+        intent.putExtra( "EXTRA_ARTICLE", article)
         startActivity(intent)
     }
 }

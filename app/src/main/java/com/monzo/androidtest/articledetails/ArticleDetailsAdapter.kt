@@ -16,10 +16,12 @@ import java.util.*
 
 private var context: Context? = null
 
+
 internal class ArticleDetailsAdapter(
     ctx: Context,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val articles: MutableList<Article> = ArrayList()
+
 
     init {
         context = ctx
@@ -27,35 +29,41 @@ internal class ArticleDetailsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
-        val view = layoutInflater.inflate(R.layout.list_item_article, parent, false)
-        return ArticleViewHolder(view)
+        val view = layoutInflater.inflate(R.layout.article_details, parent, false)
+        return ArticleDetailsViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val articleViewHolder = holder as ArticleViewHolder
-        articleViewHolder.bind(articles[position])
+        val articleDetailsViewHolder = holder as ArticleDetailsViewHolder
+        articleDetailsViewHolder.bind(articles[position])
     }
 
     override fun getItemCount(): Int {
         return articles.size
     }
 
-    fun showArticles(articles: List<Article>) {
-        this.articles.addAll(articles)
+    fun showArticleDetails(article: Article) {
+        articles.clear() // Clear existing data
+        articles.add(article) // Add the new article
         notifyDataSetChanged()
     }
 
-    class ArticleViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val headlineView = itemView.findViewById<TextView>(R.id.article_headline_textview)
-        private val thumbnailView = itemView.findViewById<ImageView>(R.id.article_thumbnail_imageview)
-        private val sectionTextView = itemView.findViewById<TextView>(R.id.article_section_textview)
-        private val publishedTextView = itemView.findViewById<TextView>(R.id.article_published_textview)
-        private val bodyTextView = itemView.findViewById<TextView>(R.id.article_body_textview)
+    class ArticleDetailsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val headlineView = itemView.findViewById<TextView>(R.id.article_details_title_textview)
+        private val thumbnailView = itemView.findViewById<ImageView>(R.id.article_details_thumbnail_imageview)
+        private val sectionView = itemView.findViewById<TextView>(R.id.article_details_section_textview)
+        private val publishedView = itemView.findViewById<TextView>(R.id.article_details_published_textview)
+        private val bodyView = itemView.findViewById<TextView>(R.id.article_details_body_textview)
+
         fun bind(article: Article) {
             headlineView.text = article.title
-            sectionTextView.text = article.sectionId
-            publishedTextView.id = article.published.date
-            bodyTextView.text = article.body
+            sectionView.text = article.sectionId
+            publishedView.text = article.published.toString()
+            bodyView.text = article.body
+
+            Glide.with(context!!)
+                .load(article.thumbnail)
+                .into(thumbnailView)
         }
     }
 }

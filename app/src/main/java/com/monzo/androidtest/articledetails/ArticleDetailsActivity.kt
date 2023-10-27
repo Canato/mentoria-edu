@@ -1,23 +1,19 @@
 package com.monzo.androidtest.articles
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bumptech.glide.Glide
 import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
-import com.monzo.androidtest.articledetails.ArticleDetailsViewModel
 import com.monzo.androidtest.articles.model.Article
 
 
+
 class ArticleDetailsActivity : AppCompatActivity() {
-    private lateinit var viewModel: ArticleDetailsViewModel
+    private lateinit var viewModel: ArticlesViewModel
     private lateinit var adapter: ArticleDetailsAdapter
     private lateinit var article: Article
 
@@ -25,22 +21,28 @@ class ArticleDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_details)
 
-        article = intent.getParcelableExtra("ARTICLE")!!
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.article_details_swiperefreshlayout)
+        val recyclerView = findViewById<RecyclerView>(R.id.article_details_recyclerview)
 
-        val thumbnailImageView = findViewById<ImageView>(R.id.article_details_thumbnail_imageview)
-        val titleTextView = findViewById<TextView>(R.id.article_title_textview)
-        val sectionTextView = findViewById<TextView>(R.id.article_section_textview)
-        val publishedTextView = findViewById<TextView>(R.id.article_published_textview)
-        val bodyTextView = findViewById<TextView>(R.id.article_body_textview)
+        setSupportActionBar(toolbar)
 
-        // Set data to views
-        Glide.with(this)
-            .load(article.thumbnail)
-            .into(thumbnailImageView)
+        viewModel = HeadlinesApp.from(applicationContext).inject(this)
 
-        titleTextView.text = article.title
-        sectionTextView.text = article.sectionName
-        publishedTextView.text = article.published.toString()
-        bodyTextView.text = article.body
+        adapter = ArticleDetailsAdapter(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+
+        swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
+
+        viewModel.state.observe(this) { state ->
+            swipeRefreshLayout.isRefreshing = state.refreshing
+            article = intent.getParcelableExtra("EXTRA_ARTICLE")!!
+            adapter.showArticleDetails(article)
+        }
     }
+
+
+
 }
+
