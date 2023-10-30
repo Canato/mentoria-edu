@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.monzo.androidtest.R
 import com.monzo.androidtest.articles.model.Article
+import java.text.SimpleDateFormat
 import java.util.*
 
 private var context: Context? = null
@@ -58,8 +60,14 @@ internal class ArticleDetailsAdapter(
         fun bind(article: Article) {
             headlineView.text = article.title
             sectionView.text = article.sectionId
-            publishedView.text = article.published.toString()
-            bodyView.text = article.body
+
+            val dateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale.getDefault())
+            val formattedDate = dateFormat.format(article.published)
+
+            publishedView.text = formattedDate
+
+            val formattedBody = HtmlCompat.fromHtml(article.body, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            bodyView.text = formattedBody
 
             Glide.with(context!!)
                 .load(article.thumbnail)
