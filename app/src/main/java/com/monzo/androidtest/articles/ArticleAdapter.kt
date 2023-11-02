@@ -31,9 +31,7 @@ internal class ArticleAdapter(
         articleViewHolder.bind(articles[position], context)
     }
 
-    override fun getItemCount(): Int {
-        return articles.size
-    }
+    override fun getItemCount(): Int = articles.size
 
     fun showArticles(articles: List<Article>) {
         this.articles.addAll(articles)

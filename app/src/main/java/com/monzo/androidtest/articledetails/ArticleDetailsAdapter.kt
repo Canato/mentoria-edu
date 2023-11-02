@@ -28,9 +28,7 @@ internal class ArticleDetailsAdapter(
         articleDetailsViewHolder.bind(articles[position], context)
     }
 
-    override fun getItemCount(): Int {
-        return articles.size
-    }
+    override fun getItemCount(): Int = articles.size
 
     fun showArticleDetails(article: Article) {
         articles.clear() // Clear existing data
