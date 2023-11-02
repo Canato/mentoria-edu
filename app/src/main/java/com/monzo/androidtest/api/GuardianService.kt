@@ -16,7 +16,7 @@ interface GuardianService {
 
     @GET
     fun getArticle(
-            @Url articleUrl: String,
-            @Query("show-fields") fields: String
+        @Url articleUrl: String,
+        @Query("show-fields") fields: String
     ): Single<ApiArticle>
 }
