@@ -14,17 +14,11 @@ import com.monzo.androidtest.R
 import com.monzo.androidtest.articles.model.Article
 import java.util.*
 
-private var context: Context? = null
-
 internal class ArticleAdapter(
-    ctx: Context,
+    private val context: Context,
     private val clickListener: OnArticleClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val articles: MutableList<Article> = ArrayList()
-
-    init {
-        context = ctx
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
@@ -34,7 +28,7 @@ internal class ArticleAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val articleViewHolder = holder as ArticleViewHolder
-        articleViewHolder.bind(articles[position])
+        articleViewHolder.bind(articles[position], context)
     }
 
     override fun getItemCount(): Int {
@@ -50,11 +44,11 @@ internal class ArticleAdapter(
         private val headlineView = itemView.findViewById<TextView>(R.id.article_headline_textview)
         private val thumbnailView = itemView.findViewById<ImageView>(R.id.article_thumbnail_imageview)
 
-        fun bind(article: Article) {
+        fun bind(article: Article, context: Context) {
             headlineView.text = article.title
 
             // Load the image as a circular image
-            Glide.with(context!!)
+            Glide.with(context)
                 .load(article.thumbnail)
                 .apply(RequestOptions().transform(CircleCrop()))
                 .into(thumbnailView)

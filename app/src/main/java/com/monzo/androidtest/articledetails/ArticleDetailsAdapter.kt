@@ -12,18 +12,10 @@ import com.monzo.androidtest.R
 import com.monzo.androidtest.articles.model.Article
 import java.util.*
 
-private var context: Context? = null
-
-
 internal class ArticleDetailsAdapter(
-    ctx: Context,
+    private val context: Context,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val articles: MutableList<Article> = ArrayList()
-
-
-    init {
-        context = ctx
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(context)
@@ -33,7 +25,7 @@ internal class ArticleDetailsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val articleDetailsViewHolder = holder as ArticleDetailsViewHolder
-        articleDetailsViewHolder.bind(articles[position])
+        articleDetailsViewHolder.bind(articles[position], context)
     }
 
     override fun getItemCount(): Int {
@@ -53,13 +45,13 @@ internal class ArticleDetailsAdapter(
         private val publishedView = itemView.findViewById<TextView>(R.id.article_details_published_textview)
         private val bodyView = itemView.findViewById<TextView>(R.id.article_details_body_textview)
 
-        fun bind(article: Article) {
+        fun bind(article: Article, context: Context) {
             headlineView.text = article.title
             sectionView.text = article.sectionId
             publishedView.text = article.published.toString()
             bodyView.text = article.body
 
-            Glide.with(context!!)
+            Glide.with(context)
                 .load(article.thumbnail)
                 .into(thumbnailView)
         }
