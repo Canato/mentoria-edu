@@ -8,8 +8,8 @@ import io.reactivex.schedulers.Schedulers
 
 class ArticleDetailsViewModel(
     private val repository: ArticleDetailsRepository
-) : BaseViewModel<ArticlesState>(
-    ArticlesState(
+) : BaseViewModel<ArticleDetailsState>(
+    ArticleDetailsState(
         thumbnail = "",
         title = "",
         body = "",
@@ -21,7 +21,7 @@ class ArticleDetailsViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { article ->
-                ArticlesState(
+                ArticleDetailsState(
                     thumbnail = article.fields?.thumbnail!!,
                     title = article.fields.headline!!,
                     body = article.fields.body!!,
@@ -30,7 +30,7 @@ class ArticleDetailsViewModel(
     }
 }
 
-data class ArticlesState(
+data class ArticleDetailsState(
     val thumbnail: String,
     val title: String,
     val body: String,
