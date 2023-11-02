@@ -1,7 +1,5 @@
 package com.monzo.androidtest.articledetails
 
-import com.monzo.androidtest.articles.ArticleDetailsRepository
-import com.monzo.androidtest.articles.ArticlesRepository
 import com.monzo.androidtest.articles.model.Article
 import com.monzo.androidtest.common.BaseViewModel
 import com.monzo.androidtest.common.plusAssign

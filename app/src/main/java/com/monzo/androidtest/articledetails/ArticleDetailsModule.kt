@@ -1,10 +1,9 @@
-package com.monzo.androidtest.articles
+package com.monzo.androidtest.articledetails
 
 import android.content.Context
 import android.content.res.Resources
 import com.monzo.androidtest.R
 import com.monzo.androidtest.api.GuardianService
-import com.monzo.androidtest.articledetails.ArticleDetailsViewModel
 import com.monzo.androidtest.articles.model.ArticleMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter

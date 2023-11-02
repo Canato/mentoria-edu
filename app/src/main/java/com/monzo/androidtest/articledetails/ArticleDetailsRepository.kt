@@ -1,4 +1,4 @@
-package com.monzo.androidtest.articles
+package com.monzo.androidtest.articledetails
 
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.api.model.ApiArticle

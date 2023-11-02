@@ -1,4 +1,4 @@
-package com.monzo.androidtest.articles
+package com.monzo.androidtest.articledetails
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 import com.monzo.androidtest.R
 import com.monzo.androidtest.articles.model.Article
 import java.util.*

@@ -1,4 +1,4 @@
-package com.monzo.androidtest.articles
+package com.monzo.androidtest.articledetails
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
+import com.monzo.androidtest.articles.ArticlesViewModel
 import com.monzo.androidtest.articles.model.Article
 
 

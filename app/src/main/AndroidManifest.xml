@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".articles.ArticleDetailsActivity"
+            android:name=".articledetails.ArticleDetailsActivity"
             android:exported="false"/>
     </application>
 
