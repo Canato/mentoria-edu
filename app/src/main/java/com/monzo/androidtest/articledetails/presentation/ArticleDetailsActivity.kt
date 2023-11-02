@@ -18,6 +18,10 @@ class ArticleDetailsActivity : AppCompatActivity() {
     private lateinit var adapter: ArticleDetailsAdapter
     private lateinit var article: Article
 
+    companion object {
+        const val EXTRA_ARTICLE_URL_KEY = "EXTRA_ARTICLE_URL_KEY"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_details)
@@ -38,7 +42,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
 
         viewModel.state.observe(this) { state ->
             swipeRefreshLayout.isRefreshing = state.refreshing
-            article = intent.getParcelableExtra("EXTRA_ARTICLE")!!
+            article = intent.getParcelableExtra("EXTRA_ARTICLE_URL")!!
             adapter.showArticleDetails(article)
         }
     }

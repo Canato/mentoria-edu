@@ -10,7 +10,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsActivity
-import com.monzo.androidtest.articles.domain.Article
+import com.monzo.androidtest.articledetails.presentation.ArticleDetailsActivity.Companion.EXTRA_ARTICLE_URL_KEY
+import com.monzo.androidtest.articles.presentation.adapter.ArticleAdapter
 
 class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListener {
     private lateinit var viewModel: ArticlesViewModel
@@ -39,9 +40,12 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
             adapter.showArticles(state.articles)
         }
     }
-    override fun onArticleClick(article: Article) {
+
+    override fun onArticleClick(articleUrl: String) {
         val intent = Intent(this, ArticleDetailsActivity::class.java)
-        intent.putExtra( "EXTRA_ARTICLE", article)
+            .apply {
+                putExtra(EXTRA_ARTICLE_URL_KEY, articleUrl)
+            }
         startActivity(intent)
     }
 }
