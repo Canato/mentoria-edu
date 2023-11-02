@@ -14,7 +14,7 @@ import com.monzo.androidtest.articles.domain.Article
 
 
 class ArticleDetailsActivity : AppCompatActivity() {
-    private lateinit var viewModel: ArticlesViewModel
+    private lateinit var viewModel: ArticleDetailsViewModel
     private lateinit var adapter: ArticleDetailsAdapter
     private lateinit var article: Article
 
@@ -32,7 +32,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        viewModel = HeadlinesApp.from(applicationContext).inject(this)
+        viewModel = HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this)
 
         adapter = ArticleDetailsAdapter(this)
         recyclerView.layoutManager = LinearLayoutManager(this)

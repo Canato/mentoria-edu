@@ -27,7 +27,7 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
 
         setSupportActionBar(toolbar)
 
-        viewModel = HeadlinesApp.from(applicationContext).inject(this)
+        viewModel = HeadlinesApp.fromArticlesModule(applicationContext).inject(this)
 
         adapter = ArticleAdapter(this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
