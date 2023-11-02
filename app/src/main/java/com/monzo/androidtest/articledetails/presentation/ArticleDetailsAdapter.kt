@@ -30,7 +30,7 @@ internal class ArticleDetailsAdapter(
 
     override fun getItemCount(): Int = articles.size
 
-    fun showArticleDetails(article: Article) {
+    fun showArticleDetails(article: ArticlesState) {
         articles.clear() // Clear existing data
         articles.add(article) // Add the new article
         notifyDataSetChanged()

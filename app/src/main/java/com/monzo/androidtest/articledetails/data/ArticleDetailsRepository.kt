@@ -8,14 +8,7 @@ import io.reactivex.Single
 
 class ArticleDetailsRepository(
     private val guardianService: GuardianService,
-    private val articleMapper: ArticleMapper
 ) {
-    fun latestFintechArticles(): Single<List<Article>> {
-        return guardianService.searchArticles("fintech,brexit")
-            .map { articleMapper.map(it) }
-    }
-
-    fun getArticle(articleUrl: String): Single<ApiArticle> {
-        return guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
-    }
+    fun getArticle(articleUrl: String): Single<ApiArticle> =
+        guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
 }

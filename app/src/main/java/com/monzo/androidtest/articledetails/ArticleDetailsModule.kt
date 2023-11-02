@@ -16,7 +16,6 @@ class ArticleDetailsModule {
         return ArticleDetailsViewModel(
             repository = ArticleDetailsRepository(
                 guardianService = guardianService,
-                articleMapper = ArticleMapper()
             )
         )
     }

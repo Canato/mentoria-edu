@@ -1,7 +1,6 @@
 package com.monzo.androidtest.articledetails.presentation
 
 import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
-import com.monzo.androidtest.articles.domain.Article
 import com.monzo.androidtest.common.BaseViewModel
 import com.monzo.androidtest.common.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,30 +8,30 @@ import io.reactivex.schedulers.Schedulers
 
 class ArticleDetailsViewModel(
     private val repository: ArticleDetailsRepository
-) : BaseViewModel<ArticlesState>(ArticlesState()) {
-    init {
-        disposables += repository.latestFintechArticles()
+) : BaseViewModel<ArticlesState>(
+    ArticlesState(
+        thumbnail = "",
+        title = "",
+        body = "",
+    )
+) {
+
+    fun fetchArticle(articleUrl: String) {
+        disposables += repository.getArticle(articleUrl)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { articles ->
-                setState { copy(refreshing = false, articles = articles) }
+            .subscribe { article ->
+                ArticlesState(
+                    thumbnail = article.fields?.thumbnail!!,
+                    title = article.fields.headline!!,
+                    body = article.fields.body!!,
+                )
             }
     }
-
-    fun onRefresh() {
-        setState { copy(refreshing = true) }
-        disposables += repository.latestFintechArticles()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ articles ->
-                setState { copy(refreshing = false, articles = articles) }
-            }, { error ->
-                // Handle error here, and set refreshing to false
-                setState { copy(refreshing = false) }
-            })
-    }
 }
+
 data class ArticlesState(
-    val refreshing: Boolean = false,
-    val articles: List<Article> = emptyList()
+    val thumbnail: String,
+    val title: String,
+    val body: String,
 )
