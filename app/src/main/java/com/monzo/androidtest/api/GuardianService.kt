@@ -18,5 +18,5 @@ interface GuardianService {
     fun getArticle(
         @Url articleUrl: String,
         @Query("show-fields") fields: String
-    ): Single<ApiArticle>
+    ): Single<ApiArticle> // Single<ApiArticleDetailsResponse> TODO: Use this
 }
