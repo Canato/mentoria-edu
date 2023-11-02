@@ -13,10 +13,4 @@ class ArticlesRepository(
         return guardianService.searchArticles("fintech,brexit")
             .map { articleMapper.map(it) }
     }
-
-    fun getArticle(articleUrl: String): Single<ApiArticle> {
-        return guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
-    }
 }
-
-
