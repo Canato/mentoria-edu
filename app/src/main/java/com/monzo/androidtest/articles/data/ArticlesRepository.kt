@@ -1,12 +1,11 @@
-package com.monzo.androidtest.articledetails
+package com.monzo.androidtest.articles.data
 
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.api.model.ApiArticle
-import com.monzo.androidtest.articles.model.Article
-import com.monzo.androidtest.articles.model.ArticleMapper
+import com.monzo.androidtest.articles.domain.Article
 import io.reactivex.Single
 
-class ArticleDetailsRepository(
+class ArticlesRepository(
     private val guardianService: GuardianService,
     private val articleMapper: ArticleMapper
 ) {
@@ -19,3 +18,5 @@ class ArticleDetailsRepository(
         return guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
     }
 }
+
+

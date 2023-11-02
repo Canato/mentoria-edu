@@ -4,6 +4,8 @@ import com.monzo.androidtest.util.RxSchedulerRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.monzo.androidtest.articles.data.ArticlesRepository
+import com.monzo.androidtest.articles.presentation.ArticlesViewModel
 import io.reactivex.Single
 import org.junit.Assert
 import org.junit.Rule

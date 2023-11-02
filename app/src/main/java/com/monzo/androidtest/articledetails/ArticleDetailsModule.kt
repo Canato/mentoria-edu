@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.res.Resources
 import com.monzo.androidtest.R
 import com.monzo.androidtest.api.GuardianService
-import com.monzo.androidtest.articles.model.ArticleMapper
+import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
+import com.monzo.androidtest.articledetails.presentation.ArticleDetailsViewModel
+import com.monzo.androidtest.articles.data.ArticleMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

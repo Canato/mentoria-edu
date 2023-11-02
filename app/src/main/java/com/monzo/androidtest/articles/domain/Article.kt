@@ -1,8 +1,7 @@
-package com.monzo.androidtest.articles.model
+package com.monzo.androidtest.articles.domain
 
 import android.os.Parcel
 import android.os.Parcelable
-import retrofit2.http.Body
 import java.util.*
 
 data class Article(

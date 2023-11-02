@@ -1,4 +1,4 @@
-package com.monzo.androidtest.articledetails
+package com.monzo.androidtest.articledetails.presentation
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.monzo.androidtest.R
-import com.monzo.androidtest.articles.model.Article
+import com.monzo.androidtest.articles.domain.Article
 import java.util.*
 
 internal class ArticleDetailsAdapter(
