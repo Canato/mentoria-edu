@@ -1,6 +1,7 @@
-package com.monzo.androidtest.articles.model
+package com.monzo.androidtest.articles.data
 
 import com.monzo.androidtest.api.model.ApiArticleListResponse
+import com.monzo.androidtest.articles.domain.Article
 import java.util.*
 
 class ArticleMapper {
@@ -30,14 +31,16 @@ class ArticleMapper {
                 body = fields.body ?: ""
             }
 
-            articles.add(Article(id,
+            articles.add(
+                Article(id,
                     thumbnail,
                     sectionId,
                     sectionName,
                     webPublicationDate,
                     headline,
                     apiUrl,
-                    body))
+                    body)
+            )
         }
 
         return articles

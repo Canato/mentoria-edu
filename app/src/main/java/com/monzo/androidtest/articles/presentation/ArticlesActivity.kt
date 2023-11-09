@@ -1,4 +1,4 @@
-package com.monzo.androidtest.articles
+package com.monzo.androidtest.articles.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
-import com.monzo.androidtest.articles.model.Article
+import com.monzo.androidtest.articledetails.presentation.ArticleDetailsActivity
+import com.monzo.androidtest.articledetails.presentation.ArticleDetailsActivity.Companion.EXTRA_ARTICLE_URL_KEY
+import com.monzo.androidtest.articles.presentation.adapter.ArticleAdapter
 
 class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListener {
     private lateinit var viewModel: ArticlesViewModel
@@ -25,7 +27,7 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
 
         setSupportActionBar(toolbar)
 
-        viewModel = HeadlinesApp.from(applicationContext).inject(this)
+        viewModel = HeadlinesApp.fromArticlesModule(applicationContext).inject(this)
 
         adapter = ArticleAdapter(this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -38,9 +40,12 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
             adapter.showArticles(state.articles)
         }
     }
-    override fun onArticleClick(article: Article) {
+
+    override fun onArticleClick(articleUrl: String) {
         val intent = Intent(this, ArticleDetailsActivity::class.java)
-        intent.putExtra( "EXTRA_ARTICLE", article)
+            .apply {
+                putExtra(EXTRA_ARTICLE_URL_KEY, articleUrl)
+            }
         startActivity(intent)
     }
 }

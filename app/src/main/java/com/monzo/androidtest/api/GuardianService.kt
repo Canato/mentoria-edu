@@ -9,14 +9,14 @@ import retrofit2.http.Url
 
 interface GuardianService {
 
-    @GET("search?show-fields=body,headline,thumbnail&page-size=50")
+    @GET("search?show-fields=headline,thumbnail&page-size=50")
     fun searchArticles(
         @Query("q") searchTerm: String
     ): Single<ApiArticleListResponse>
 
     @GET
     fun getArticle(
-            @Url articleUrl: String,
-            @Query("show-fields") fields: String
-    ): Single<ApiArticle>
+        @Url articleUrl: String,
+        @Query("show-fields") fields: String
+    ): Single<ApiArticle> // Single<ApiArticleDetailsResponse> TODO: Use this
 }
