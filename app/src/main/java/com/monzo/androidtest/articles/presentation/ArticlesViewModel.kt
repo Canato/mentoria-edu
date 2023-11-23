@@ -1,6 +1,7 @@
-package com.monzo.androidtest.articles
+package com.monzo.androidtest.articles.presentation
 
-import com.monzo.androidtest.articles.model.Article
+import com.monzo.androidtest.articles.data.ArticlesRepository
+import com.monzo.androidtest.articles.domain.Article
 import com.monzo.androidtest.common.BaseViewModel
 import com.monzo.androidtest.common.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
