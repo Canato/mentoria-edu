@@ -27,7 +27,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="article thumbnail" />
+                android:contentDescription="@string/article_thumbnail" />
 
             <TextView
                 android:id="@+id/headline_textView"
@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/body_textView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"

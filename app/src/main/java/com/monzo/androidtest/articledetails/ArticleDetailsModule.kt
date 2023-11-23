@@ -9,14 +9,15 @@ import com.monzo.androidtest.common.injection.NetworkModule
 
 class ArticleDetailsModule {
 
-    fun inject(context: Context): ArticleDetailsViewModel {
+    fun inject(context: Context, url:String): ArticleDetailsViewModel {
         val networkModule = NetworkModule(context = context)
         val guardianService = networkModule.provideRetrofit().create(GuardianService::class.java)
 
         return ArticleDetailsViewModel(
             repository = ArticleDetailsRepository(
                 guardianService = guardianService,
-            )
+            ),
+            articleUrl = url
         )
     }
 }

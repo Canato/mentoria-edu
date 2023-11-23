@@ -1,16 +1,18 @@
 package com.monzo.androidtest.articledetails.presentation
 
 import android.os.Bundle
+import android.text.Html
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Glide.*
 import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
 
 class ArticleDetailsActivity : AppCompatActivity() {
     private lateinit var viewModel: ArticleDetailsViewModel
-
     private lateinit var thumbnailImageView: ImageView
     private lateinit var headlineTextView: TextView
     private lateinit var bodyTextView: TextView
@@ -27,21 +29,21 @@ class ArticleDetailsActivity : AppCompatActivity() {
         headlineTextView = findViewById(R.id.headline_textView)
         bodyTextView = findViewById(R.id.body_textView)
 
-        viewModel = HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this)
         val articleUrl = intent.getStringExtra(EXTRA_ARTICLE_URL_KEY)
-        viewModel.fetchArticle(articleUrl!!)
+        viewModel = HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
 
         viewModel.state.observe(this) { state ->
-            updateUI(state)
+            state?.let { updateUI(state) }
         }
     }
 
     private fun updateUI(state: ArticleDetailsState) {
-        headlineTextView.text = state.title
-        bodyTextView.text = state.body
+        val article = state.article
+        headlineTextView.text = article?.title
+        bodyTextView.text = article?.body?.let { Html.fromHtml(it) }
 
-        state.thumbnail.let {
-            Glide.with(this).load(it).into(thumbnailImageView)
+        article.let {
+            with(this).load(it?.thumbnail).into(thumbnailImageView)
         }
     }
 }

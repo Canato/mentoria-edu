@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">The Guardian</string>
+    <string name="article_thumbnail">article thumbnail</string>
 </resources>
