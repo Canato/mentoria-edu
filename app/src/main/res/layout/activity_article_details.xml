@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".articledetails.presentation.ArticleDetailsActivity">
 
-    <ToggleButton
+    <ImageView
         android:id="@+id/favorite_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -14,8 +14,6 @@
         android:background="@drawable/toggle_selector"
         android:drawablePadding="8dp"
         android:elevation="10dp"
-        android:textOff=""
-        android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

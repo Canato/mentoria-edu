@@ -16,7 +16,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
     private lateinit var thumbnailImageView: ImageView
     private lateinit var headlineTextView: TextView
     private lateinit var bodyTextView: TextView
-    private lateinit var favoriteButton: ToggleButton
+    private lateinit var favoriteButton: ImageView
     private lateinit var returnButton: ImageButton
     companion object {
         const val EXTRA_ARTICLE_URL_KEY = "EXTRA_ARTICLE_URL_KEY"
@@ -35,7 +35,8 @@ class ArticleDetailsActivity : AppCompatActivity() {
         val articleUrl = intent.getStringExtra(EXTRA_ARTICLE_URL_KEY)
         viewModel = HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
 
-        favoriteButton.setOnClickListener {favoriteButton.isChecked!=favoriteButton.isChecked}
+        favoriteButton.setOnClickListener {
+            favoriteButton.isSelected != favoriteButton.isSelected}
 
         returnButton.setOnClickListener { finish()}
 
