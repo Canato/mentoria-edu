@@ -17,21 +17,29 @@ class ArticleDetailsRepository(
     companion object {
         private const val SHARED_PREF_NAME = "ArticleDetailsPrefs"
         private const val KEY_FAVORITE_STATE_PREFIX = "favorite_state_"
+        private const val KEY_FAVORITE_ARTICLES = "favorite_articles"
     }
 
     fun getArticle(articleUrl: String): Single<ApiArticle> =
         guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
             .map { it.response.content }
 
-    fun getFavoriteState(articleUrl: String): Boolean {
-        return sharedPreferences.getBoolean(getFavoriteStateKey(articleUrl), false)
+
+    fun getAllFavoriteArticles(): Set<String> {
+        return sharedPreferences.all.keys.filter { it.startsWith(KEY_FAVORITE_STATE_PREFIX) }
+            .map { it.removePrefix(KEY_FAVORITE_STATE_PREFIX) }
+            .toSet()
     }
 
-    fun setFavoriteState(articleUrl: String, isFavorite: Boolean) {
-        sharedPreferences.edit().putBoolean(getFavoriteStateKey(articleUrl), isFavorite).apply()
+    fun addFavoriteArticle(articleUrl: String) {
+        val favoriteArticles = getAllFavoriteArticles().toMutableSet()
+        favoriteArticles.add(articleUrl)
+        sharedPreferences.edit().putStringSet(KEY_FAVORITE_ARTICLES, favoriteArticles).apply()
     }
 
-    private fun getFavoriteStateKey(articleUrl: String): String {
-        return "$KEY_FAVORITE_STATE_PREFIX$articleUrl"
+    fun removeFavoriteArticle(articleUrl: String) {
+        val favoriteArticles = getAllFavoriteArticles().toMutableSet()
+        favoriteArticles.remove(articleUrl)
+        sharedPreferences.edit().putStringSet(KEY_FAVORITE_ARTICLES, favoriteArticles).apply()
     }
 }
