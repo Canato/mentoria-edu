@@ -37,15 +37,16 @@ class ArticleDetailsActivity : AppCompatActivity() {
         viewModel =
             HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
 
+        viewModel.state.observe(this) { state ->
+            state?.let { updateUI(state) }
+        }
+
         favoriteButton.setOnClickListener {
             viewModel.toggleFavorite()
         }
 
         returnButton.setOnClickListener { finish() }
 
-        viewModel.state.observe(this) { state ->
-            state?.let { updateUI(state) }
-        }
     }
 
     private fun updateUI(state: ArticleDetailsState) {

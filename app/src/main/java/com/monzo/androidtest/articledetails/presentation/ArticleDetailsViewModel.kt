@@ -10,7 +10,7 @@ class ArticleDetailsViewModel(
     val repository: ArticleDetailsRepository,
     val articleUrl: String
 ) : BaseViewModel<ArticleDetailsState>(
-    ArticleDetailsState(null)
+    ArticleDetailsState(null, isFavorite = false)
 ) {
     init {
         disposables += repository.getArticle(articleUrl)
@@ -22,14 +22,21 @@ class ArticleDetailsViewModel(
                     title = article.fields.headline!!,
                     body = article.fields.body!!,
                 )
-                setState { copy(article = articleDetails) }
+                val isFavorite = repository.getAllFavoriteArticles().contains(articleUrl)
+                setState { this.copy(article = articleDetails, isFavorite = isFavorite) }
             }
     }
     fun toggleFavorite() {
         val currentState = state.value
         val newFavoriteState = !currentState!!.isFavorite
-        repository.setFavoriteState(articleUrl, newFavoriteState)
-        setState { copy(isFavorite = newFavoriteState)}
+
+        if (newFavoriteState) {
+            repository.addFavoriteArticle (articleUrl)
+        } else {
+            repository.removeFavoriteArticle(articleUrl)
+        }
+
+        setState { copy(isFavorite = newFavoriteState) }
     }
 }
 
