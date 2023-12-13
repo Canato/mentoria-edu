@@ -18,6 +18,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
     private lateinit var bodyTextView: TextView
     private lateinit var favoriteButton: ImageView
     private lateinit var returnButton: ImageButton
+
     companion object {
         const val EXTRA_ARTICLE_URL_KEY = "EXTRA_ARTICLE_URL_KEY"
     }
@@ -33,12 +34,14 @@ class ArticleDetailsActivity : AppCompatActivity() {
         returnButton = findViewById(R.id.return_button)
 
         val articleUrl = intent.getStringExtra(EXTRA_ARTICLE_URL_KEY)
-        viewModel = HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
+        viewModel =
+            HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
 
         favoriteButton.setOnClickListener {
-            favoriteButton.isSelected != favoriteButton.isSelected}
+            viewModel.toggleFavorite()
+        }
 
-        returnButton.setOnClickListener { finish()}
+        returnButton.setOnClickListener { finish() }
 
         viewModel.state.observe(this) { state ->
             state?.let { updateUI(state) }
@@ -53,5 +56,11 @@ class ArticleDetailsActivity : AppCompatActivity() {
         article.let {
             with(this).load(it?.thumbnail).into(thumbnailImageView)
         }
+        val favoriteDrawableRes = if (state.isFavorite) {
+            R.drawable.favorite_filled
+        } else {
+            R.drawable.favorite_outlined
+        }
+        favoriteButton.setImageResource(favoriteDrawableRes)
     }
 }

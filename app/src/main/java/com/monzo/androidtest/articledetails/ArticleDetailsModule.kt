@@ -4,7 +4,6 @@ import android.content.Context
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsViewModel
-import com.monzo.androidtest.articles.data.ArticleMapper
 import com.monzo.androidtest.common.injection.NetworkModule
 
 class ArticleDetailsModule {
@@ -16,6 +15,7 @@ class ArticleDetailsModule {
         return ArticleDetailsViewModel(
             repository = ArticleDetailsRepository(
                 guardianService = guardianService,
+                context = context
             ),
             articleUrl = url
         )

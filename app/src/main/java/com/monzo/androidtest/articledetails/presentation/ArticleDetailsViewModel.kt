@@ -7,8 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ArticleDetailsViewModel(
-    private val repository: ArticleDetailsRepository,
-    private val articleUrl: String
+    val repository: ArticleDetailsRepository,
+    val articleUrl: String
 ) : BaseViewModel<ArticleDetailsState>(
     ArticleDetailsState(null)
 ) {
@@ -25,11 +25,17 @@ class ArticleDetailsViewModel(
                 setState { copy(article = articleDetails) }
             }
     }
-
+    fun toggleFavorite() {
+        val currentState = state.value
+        val newFavoriteState = !currentState!!.isFavorite
+        repository.setFavoriteState(articleUrl, newFavoriteState)
+        setState { copy(isFavorite = newFavoriteState)}
+    }
 }
 
 data class ArticleDetailsState(
-    val article: ArticleDetailsInfo?
+    val article: ArticleDetailsInfo?,
+    val isFavorite: Boolean = false
 )
 data class ArticleDetailsInfo(
     val thumbnail: String,
