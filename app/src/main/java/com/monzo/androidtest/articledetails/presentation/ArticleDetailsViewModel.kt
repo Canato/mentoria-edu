@@ -7,8 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ArticleDetailsViewModel(
-    val repository: ArticleDetailsRepository,
-    val articleUrl: String
+    private val repository: ArticleDetailsRepository,
+    private val articleUrl: String
 ) : BaseViewModel<ArticleDetailsState>(
     ArticleDetailsState(null, isFavorite = false)
 ) {
