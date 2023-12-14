@@ -1,6 +1,7 @@
 package com.monzo.androidtest.articledetails
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsViewModel
@@ -12,10 +13,15 @@ class ArticleDetailsModule {
         val networkModule = NetworkModule(context = context)
         val guardianService = networkModule.provideRetrofit().create(GuardianService::class.java)
 
+        val sharedPreferences = context.getSharedPreferences(
+            ArticleDetailsRepository.SHARED_PREF_NAME_KEY,
+            Context.MODE_PRIVATE
+        )
+
         return ArticleDetailsViewModel(
             repository = ArticleDetailsRepository(
                 guardianService = guardianService,
-                context = context
+                sharedPreferences = sharedPreferences
             ),
             articleUrl = url
         )

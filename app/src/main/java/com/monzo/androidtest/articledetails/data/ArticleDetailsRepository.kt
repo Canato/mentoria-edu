@@ -1,6 +1,5 @@
 package com.monzo.androidtest.articledetails.data
 
-import android.content.Context
 import android.content.SharedPreferences
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.api.model.ApiArticle
@@ -8,15 +7,11 @@ import io.reactivex.Single
 
 class ArticleDetailsRepository(
     private val guardianService: GuardianService,
-    private val context: Context
+    private val sharedPreferences: SharedPreferences
 ) {
-    private val sharedPreferences: SharedPreferences by lazy {
-        context.getSharedPreferences(SHARED_PREF_NAME_KEY, Context.MODE_PRIVATE)
-    }
 
     companion object {
-        private const val SHARED_PREF_NAME_KEY = "SHARED_PREF_NAME_KEY"
-        private const val FAVORITE_STATE_PREFIX_KEY = "KEY_FAVORITE_STATE_PREFIX_KEY"
+        const val SHARED_PREF_NAME_KEY = "SHARED_PREF_NAME_KEY"
         private const val FAVORITE_ARTICLES_KEY = "FAVORITE_ARTICLES_KEY"
     }
 
