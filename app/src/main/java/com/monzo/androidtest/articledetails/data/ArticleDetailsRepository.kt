@@ -11,13 +11,13 @@ class ArticleDetailsRepository(
     private val context: Context
 ) {
     private val sharedPreferences: SharedPreferences by lazy {
-        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        context.getSharedPreferences(SHARED_PREF_NAME_KEY, Context.MODE_PRIVATE)
     }
 
     companion object {
-        private const val SHARED_PREF_NAME = "ArticleDetailsPrefs"
-        private const val KEY_FAVORITE_STATE_PREFIX = "favorite_state_"
-        private const val KEY_FAVORITE_ARTICLES = "favorite_articles"
+        private const val SHARED_PREF_NAME_KEY = "SHARED_PREF_NAME_KEY"
+        private const val FAVORITE_STATE_PREFIX_KEY = "KEY_FAVORITE_STATE_PREFIX_KEY"
+        private const val FAVORITE_ARTICLES_KEY = "FAVORITE_ARTICLES_KEY"
     }
 
     fun getArticle(articleUrl: String): Single<ApiArticle> =
@@ -26,20 +26,18 @@ class ArticleDetailsRepository(
 
 
     fun getAllFavoriteArticles(): Set<String> {
-        return sharedPreferences.all.keys.filter { it.startsWith(KEY_FAVORITE_STATE_PREFIX) }
-            .map { it.removePrefix(KEY_FAVORITE_STATE_PREFIX) }
-            .toSet()
+        return sharedPreferences.getStringSet(FAVORITE_ARTICLES_KEY, null) ?: setOf()
     }
 
     fun addFavoriteArticle(articleUrl: String) {
         val favoriteArticles = getAllFavoriteArticles().toMutableSet()
         favoriteArticles.add(articleUrl)
-        sharedPreferences.edit().putStringSet(KEY_FAVORITE_ARTICLES, favoriteArticles).apply()
+        sharedPreferences.edit().putStringSet(FAVORITE_ARTICLES_KEY, favoriteArticles).apply()
     }
 
     fun removeFavoriteArticle(articleUrl: String) {
         val favoriteArticles = getAllFavoriteArticles().toMutableSet()
         favoriteArticles.remove(articleUrl)
-        sharedPreferences.edit().putStringSet(KEY_FAVORITE_ARTICLES, favoriteArticles).apply()
+        sharedPreferences.edit().putStringSet(FAVORITE_ARTICLES_KEY, favoriteArticles).apply()
     }
 }
