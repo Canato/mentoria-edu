@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
+
     android:gravity="center_vertical">
 
     <ImageView
-        tools:src="@drawable/place_holder"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:background="@drawable/side_gradient_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/list_favorite_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/toggle_selector"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/article_thumbnail_imageview"
+        app:layout_constraintStart_toStartOf="@+id/imageView"/>
+
+    <ImageView
         android:id="@+id/article_thumbnail_imageview"
         android:layout_width="96dp"
         android:layout_height="96dp"
+        android:elevation="2dp"
+        android:padding="10dp"
         android:scaleType="centerCrop"
-        android:padding="8dp" />
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:src="@drawable/place_holder" />
 
     <TextView
-        tools:text="Título"
         android:id="@+id/article_headline_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="136dp"
+        android:elevation="2dp"
         android:fontFamily="sans-serif-regular"
-        android:textColor="@color/black" />
-</LinearLayout>
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/article_thumbnail_imageview"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        tools:text="Título" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 
