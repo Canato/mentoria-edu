@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsViewModel
+import com.monzo.androidtest.common.FavoriteService
 import com.monzo.androidtest.common.injection.NetworkModule
 
 class ArticleDetailsModule {
@@ -21,9 +22,9 @@ class ArticleDetailsModule {
         return ArticleDetailsViewModel(
             repository = ArticleDetailsRepository(
                 guardianService = guardianService,
-                sharedPreferences = sharedPreferences
+                favoriteService = FavoriteService(sharedPreferences)
             ),
-            articleUrl = url
-        )
+            articleUrl = url,
+            favoriteService = FavoriteService(sharedPreferences))
     }
 }

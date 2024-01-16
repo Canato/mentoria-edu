@@ -3,11 +3,12 @@ package com.monzo.androidtest.articledetails.data
 import android.content.SharedPreferences
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.api.model.ApiArticle
+import com.monzo.androidtest.common.FavoriteService
 import io.reactivex.Single
 
 class ArticleDetailsRepository(
     private val guardianService: GuardianService,
-    private val sharedPreferences: SharedPreferences
+    private val favoriteService: FavoriteService
 ) {
 
     companion object {
@@ -20,19 +21,13 @@ class ArticleDetailsRepository(
             .map { it.response.content }
 
 
-    fun getAllFavoriteArticles(): Set<String> {
-        return sharedPreferences.getStringSet(FAVORITE_ARTICLES_KEY, null) ?: setOf()
-    }
+    fun getAllFavoriteArticles(): Set<String> = favoriteService.getAllFavoriteArticles()
 
     fun addFavoriteArticle(articleUrl: String) {
-        val favoriteArticles = getAllFavoriteArticles().toMutableSet()
-        favoriteArticles.add(articleUrl)
-        sharedPreferences.edit().putStringSet(FAVORITE_ARTICLES_KEY, favoriteArticles).apply()
+        favoriteService.addFavoriteArticle(articleUrl)
     }
 
     fun removeFavoriteArticle(articleUrl: String) {
-        val favoriteArticles = getAllFavoriteArticles().toMutableSet()
-        favoriteArticles.remove(articleUrl)
-        sharedPreferences.edit().putStringSet(FAVORITE_ARTICLES_KEY, favoriteArticles).apply()
+        favoriteService.removeFavoriteArticle(articleUrl)
     }
 }
