@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-
     android:gravity="center_vertical">
 
     <ImageView
@@ -24,34 +23,43 @@
         android:id="@+id/list_favorite_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginStart="4dp"
         android:background="@drawable/toggle_selector"
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/article_thumbnail_imageview"
-        app:layout_constraintStart_toStartOf="@+id/imageView"/>
+        app:layout_constraintEnd_toStartOf="@+id/article_thumbnail_imageview"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421" />
 
     <ImageView
         android:id="@+id/article_thumbnail_imageview"
         android:layout_width="96dp"
         android:layout_height="96dp"
+        android:layout_marginStart="52dp"
         android:elevation="2dp"
         android:padding="10dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0"
         tools:src="@drawable/place_holder" />
 
     <TextView
         android:id="@+id/article_headline_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="136dp"
+        android:layout_marginStart="4dp"
         android:elevation="2dp"
         android:fontFamily="sans-serif-regular"
         android:textAlignment="textStart"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/article_thumbnail_imageview"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.506"
         tools:text="Título" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

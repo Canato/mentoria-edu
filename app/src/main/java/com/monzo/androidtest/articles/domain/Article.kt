@@ -11,4 +11,5 @@ data class Article(
     val title: String,
     val url: String,
     val body: String,
+    var isFavorite: Boolean = false
 )

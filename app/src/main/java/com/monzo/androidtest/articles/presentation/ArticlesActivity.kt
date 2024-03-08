@@ -2,7 +2,6 @@ package com.monzo.androidtest.articles.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,25 +11,33 @@ import com.monzo.androidtest.HeadlinesApp
 import com.monzo.androidtest.R
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsActivity
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsActivity.Companion.EXTRA_ARTICLE_URL_KEY
+import com.monzo.androidtest.articles.domain.Article
 import com.monzo.androidtest.articles.presentation.adapter.ArticleAdapter
+import com.monzo.androidtest.articles.presentation.ArticlesViewModel
 
 class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListener {
     private lateinit var viewModel: ArticlesViewModel
     private lateinit var adapter: ArticleAdapter
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_list)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.articles_swiperefreshlayout)
+        swipeRefreshLayout = findViewById(R.id.articles_swiperefreshlayout)
         val recyclerView = findViewById<RecyclerView>(R.id.articles_recyclerview)
 
         setSupportActionBar(toolbar)
 
-        viewModel = HeadlinesApp.fromArticlesModule(applicationContext).inject(this)
+        val articleUrl : String = intent.getStringExtra(EXTRA_ARTICLE_URL_KEY).toString()
+        viewModel = HeadlinesApp.fromArticlesModule(applicationContext).inject(this, articleUrl)
 
-        adapter = ArticleAdapter(this, this)
+        adapter = ArticleAdapter(this, this, object : ArticleAdapter.OnFavoriteClickListener {
+            override fun onFavoriteClick(article: Article) {
+                viewModel.toggleFavorite(article)
+            }
+        })
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -42,6 +49,11 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchLatestArticles()
+    }
+
     override fun onArticleClick(articleUrl: String) {
         val intent = Intent(this, ArticleDetailsActivity::class.java)
             .apply {
@@ -50,4 +62,3 @@ class ArticlesActivity : AppCompatActivity(), ArticleAdapter.OnArticleClickListe
         startActivity(intent)
     }
 }
-

@@ -13,20 +13,32 @@ import com.monzo.androidtest.articles.domain.Article
 
 class ArticleViewHolder(
     view: View,
-    private val onClick: (articleUrl: String) -> Unit
+    private val onClick: (articleUrl: String) -> Unit,
+    private val onFavoriteClick: (article: Article) -> Unit
 ) : RecyclerView.ViewHolder(view) {
     private val headlineView = itemView.findViewById<TextView>(R.id.article_headline_textview)
     private val thumbnailView = itemView.findViewById<ImageView>(R.id.article_thumbnail_imageview)
+    private val listFavButton = itemView.findViewById<ImageView>(R.id.list_favorite_button)
 
-    fun bind(article: Article, context: Context) {
+    fun bind(article: Article) {
         headlineView.text = article.title
 
-        // Load the image as a circular image
-        Glide.with(context)
+        Glide.with(itemView.context)
             .load(article.thumbnail)
             .apply(RequestOptions().transform(CircleCrop()))
             .into(thumbnailView)
 
+        val favoriteDrawableRes = if (article.isFavorite) {
+            R.drawable.favorite_filled
+        } else {
+            R.drawable.favorite_outlined
+        }
+        listFavButton.setImageResource(favoriteDrawableRes)
+
         itemView.setOnClickListener { onClick(article.url) }
+
+        listFavButton.setOnClickListener { onFavoriteClick(article) }
     }
 }
+
+

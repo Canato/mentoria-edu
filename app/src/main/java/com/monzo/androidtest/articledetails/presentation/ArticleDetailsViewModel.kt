@@ -2,13 +2,15 @@ package com.monzo.androidtest.articledetails.presentation
 
 import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
 import com.monzo.androidtest.common.BaseViewModel
+import com.monzo.androidtest.common.FavoriteService
 import com.monzo.androidtest.common.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ArticleDetailsViewModel(
     private val repository: ArticleDetailsRepository,
-    private val articleUrl: String
+    private val articleUrl: String,
+    private val favoriteService: FavoriteService
 ) : BaseViewModel<ArticleDetailsState>(
     ArticleDetailsState(null, isFavorite = false)
 ) {
@@ -27,16 +29,11 @@ class ArticleDetailsViewModel(
             }
     }
     fun toggleFavorite() {
+
+        favoriteService.toggleFavoriteArticle(articleUrl)
+
         val currentState = state.value
-        val newFavoriteState = !currentState!!.isFavorite
-
-        if (newFavoriteState) {
-            repository.addFavoriteArticle (articleUrl)
-        } else {
-            repository.removeFavoriteArticle(articleUrl)
-        }
-
-        setState { copy(isFavorite = newFavoriteState) }
+        setState { copy(isFavorite = !currentState?.isFavorite!!) }
     }
 }
 

@@ -5,7 +5,6 @@ import android.text.Html
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide.with
 import com.monzo.androidtest.HeadlinesApp
@@ -34,8 +33,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
         returnButton = findViewById(R.id.return_button)
 
         val articleUrl = intent.getStringExtra(EXTRA_ARTICLE_URL_KEY)
-        viewModel =
-            HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
+        viewModel = HeadlinesApp.fromArticlesDetailsModule(applicationContext).inject(this, articleUrl!!)
 
         viewModel.state.observe(this) { state ->
             state?.let { updateUI(state) }
