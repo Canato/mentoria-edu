@@ -13,7 +13,6 @@ class ArticleDetailsRepository(
 
     companion object {
         const val SHARED_PREF_NAME_KEY = "SHARED_PREF_NAME_KEY"
-        private const val FAVORITE_ARTICLES_KEY = "FAVORITE_ARTICLES_KEY"
     }
 
     fun getArticle(articleUrl: String): Single<ApiArticle> =

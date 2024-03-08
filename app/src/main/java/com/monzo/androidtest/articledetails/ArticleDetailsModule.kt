@@ -1,7 +1,6 @@
 package com.monzo.androidtest.articledetails
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.monzo.androidtest.api.GuardianService
 import com.monzo.androidtest.articledetails.data.ArticleDetailsRepository
 import com.monzo.androidtest.articledetails.presentation.ArticleDetailsViewModel
